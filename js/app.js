@@ -1,6 +1,6 @@
 // Draw game environment elements on the screenm e.g. game level no.
-var bugSpeed = 50;
-var bugSpeedFast = 150;
+var bugSpeed = 40;
+var bugSpeedFast = 120;
 var gameLevel = 1; 
 
 var LevelDisplay = function(){}
@@ -15,13 +15,24 @@ LevelDisplay.prototype.render = function() {
 
 
 // Enemies our player must avoid
-var Enemy = function(x,y) {
+var EnemyCarBottom = function(x,y) {
 	// Variables applied to each of our instances go here,
 	// we've provided one for you to get started
 
 	// The image/sprite for our enemies, this uses
 	// a helper we've provided to easily load images
-	this.sprite = 'images/enemy-bug.png';
+	this.sprite = 'images/enemy-car-bottom.png';
+	this.x = x;
+	this.y = y;
+}
+
+var EnemyCarTop = function(x,y) {
+	// Variables applied to each of our instances go here,
+	// we've provided one for you to get started
+
+	// The image/sprite for our enemies, this uses
+	// a helper we've provided to easily load images
+	this.sprite = 'images/enemy-car-top.png';
 	this.x = x;
 	this.y = y;
 }
@@ -37,9 +48,20 @@ var EnemyTrainOne = function(x,y) {
 	this.y = y;
 }
 
+var EnemyTrainTwo = function(x,y) {
+	// Variables applied to each of our instances go here,
+	// we've provided one for you to get started
+
+	// The image/sprite for our enemies, this uses
+	// a helper we've provided to easily load images
+	this.sprite = 'images/enemy-train2.png';
+	this.x = x;
+	this.y = y;
+}
+
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+EnemyCarBottom.prototype.update = function(dt) {
 	// You should multiply any movement by the dt parameter
 	// which will ensure the game runs at the same speed for
 	// all computers.
@@ -58,11 +80,11 @@ Enemy.prototype.update = function(dt) {
 	}
 }
 
-/* EnemyTrainOne.prototype.update = function(dt) {
+EnemyCarTop.prototype.update = function(dt) {
 	// You should multiply any movement by the dt parameter
 	// which will ensure the game runs at the same speed for
 	// all computers.
-	this.x += Math.round((Math.random()* 100) + bugSpeedFast) * dt;
+	this.x -= Math.round((Math.random()* 100) + bugSpeed) * dt;
 
 	// Check for collision between bugs and player 
 	// Reset player to starting position when any of the bugs collides with the player
@@ -72,10 +94,11 @@ Enemy.prototype.update = function(dt) {
 	}
 
 	// Check if bug location has reached the right end, then reset bug's location to random starting point
-	if (this.x > 600) {
-	   this.x = -(Math.round(Math.random()*500));
+	if (this.x < 1) {
+	   this.x = +(Math.round(Math.random()*500)+500);
 	}
-} */
+}
+
 
 EnemyTrainOne.prototype.update = function(dt) {
 	// You should multiply any movement by the dt parameter
@@ -96,13 +119,39 @@ EnemyTrainOne.prototype.update = function(dt) {
 	}
 }
 
+EnemyTrainTwo.prototype.update = function(dt) {
+	// You should multiply any movement by the dt parameter
+	// which will ensure the game runs at the same speed for
+	// all computers.
+	this.x += Math.round((Math.random()* 100) + bugSpeedFast) * dt;
+
+	// Check for collision between bugs and player 
+	// Reset player to starting position when any of the bugs collides with the player
+	if ((this.x - player.x <  50 && this.y - player.y < 50) && 
+		(this.x - player.x > -50 && this.y - player.y > -50)) {
+		player.reset();
+	}
+
+	// Check if bug location has reached the right end, then reset bug's location to random starting point
+	if (this.x > 600) {
+	   this.x = -(Math.round(Math.random()*500));
+	}
+}
 
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
+EnemyCarBottom.prototype.render = function() {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+EnemyCarTop.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
 EnemyTrainOne.prototype.render = function() {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+EnemyTrainTwo.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
@@ -171,13 +220,13 @@ Player.prototype.render = function() {
 // Place the player object in a variable called player
 var leveldisplay = new LevelDisplay();
 var player = new Player(304,568);
-var enemy1 = new Enemy(Math.round(Math.random()*1000),60);
-var enemy2 = new Enemy(Math.round(Math.random()*100),143);
-var enemyTrain1 = new EnemyTrainOne(Math.round(Math.random()*100+3000),226);
-var enemy3 = new Enemy(Math.round(Math.random()*100),309);
-var enemy4 = new Enemy(Math.round(Math.random()*100),392);
-var enemy5 = new Enemy(Math.round(Math.random()*100),475);
-allEnemies = [enemy1, enemy2, enemyTrain1, enemy3, enemy4, enemy5];
+var enemyCarTop1 = new EnemyCarTop(Math.round(Math.random()*100),60);
+var enemyCarTop2 = new EnemyCarTop(Math.round(Math.random()*100),143);
+var enemyTrain1 = new EnemyTrainOne(Math.round(Math.random()*100),226);
+var enemyTrain2 = new EnemyTrainTwo(Math.round(Math.random()*100),309);
+var enemyCarBottom1 = new EnemyCarBottom(Math.round(Math.random()*100),392);
+var enemyCarBottom2 = new EnemyCarBottom(Math.round(Math.random()*100),475);
+allEnemies = [enemyCarTop1, enemyCarTop2, enemyTrain1, enemyTrain2, enemyCarBottom1, enemyCarBottom2];
 
 
 // Reset player position to starting point 
