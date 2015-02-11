@@ -3,9 +3,7 @@ var bugSpeed = 50;
 var bugSpeedFast = 150;
 var gameLevel = 1; 
 
-var LevelDisplay = function() {
-    this.sprite = 'images/Heart.png';
-}
+var LevelDisplay = function(){}
 
 LevelDisplay.prototype.render = function() {
     // Draw other game specific details like game level
@@ -28,13 +26,13 @@ var Enemy = function(x,y) {
 	this.y = y;
 }
 
-var EnemyBlack = function(x,y) {
+var EnemyTrainOne = function(x,y) {
 	// Variables applied to each of our instances go here,
 	// we've provided one for you to get started
 
 	// The image/sprite for our enemies, this uses
 	// a helper we've provided to easily load images
-	this.sprite = 'images/enemy-bug-black.png';
+	this.sprite = 'images/enemy-train1.png';
 	this.x = x;
 	this.y = y;
 }
@@ -60,7 +58,7 @@ Enemy.prototype.update = function(dt) {
 	}
 }
 
-EnemyBlack.prototype.update = function(dt) {
+/* EnemyTrainOne.prototype.update = function(dt) {
 	// You should multiply any movement by the dt parameter
 	// which will ensure the game runs at the same speed for
 	// all computers.
@@ -77,6 +75,25 @@ EnemyBlack.prototype.update = function(dt) {
 	if (this.x > 600) {
 	   this.x = -(Math.round(Math.random()*500));
 	}
+} */
+
+EnemyTrainOne.prototype.update = function(dt) {
+	// You should multiply any movement by the dt parameter
+	// which will ensure the game runs at the same speed for
+	// all computers.
+	this.x -= Math.round((Math.random()* 100) + bugSpeedFast) * dt;
+
+	// Check for collision between bugs and player 
+	// Reset player to starting position when any of the bugs collides with the player
+	if ((this.x - player.x <  50 && this.y - player.y < 50) && 
+		(this.x - player.x > -50 && this.y - player.y > -50)) {
+		player.reset();
+	}
+
+	// Check if bug location has reached the right end, then reset bug's location to random starting point
+	if (this.x < 1) {
+	   this.x = +(Math.round(Math.random()*500)+500);
+	}
 }
 
 
@@ -85,7 +102,7 @@ Enemy.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-EnemyBlack.prototype.render = function() {
+EnemyTrainOne.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
@@ -120,7 +137,8 @@ Player.prototype.handleInput = function(keynum) {
 				bugSpeed  = bugSpeed + (bugSpeed + gameLevel) * 1.5 / (gameLevel * gameLevel);
 				bugSpeedFast  = bugSpeedFast + (bugSpeedFast + gameLevel) * 1.5 / (gameLevel * gameLevel);
 				gameLevel = gameLevel + 1;
-				setTimeout(function(){player.reset()},1000);
+				// setTimeout(function(){player.reset()},1000);
+				player.reset();
 			}
 			break;
 		case 'down':
@@ -155,11 +173,11 @@ var leveldisplay = new LevelDisplay();
 var player = new Player(304,568);
 var enemy1 = new Enemy(Math.round(Math.random()*1000),60);
 var enemy2 = new Enemy(Math.round(Math.random()*100),143);
-var enemy1Black = new EnemyBlack(Math.round(Math.random()*100),226);
+var enemyTrain1 = new EnemyTrainOne(Math.round(Math.random()*100+3000),226);
 var enemy3 = new Enemy(Math.round(Math.random()*100),309);
 var enemy4 = new Enemy(Math.round(Math.random()*100),392);
 var enemy5 = new Enemy(Math.round(Math.random()*100),475);
-allEnemies = [enemy1, enemy2, enemy1Black, enemy3, enemy4, enemy5];
+allEnemies = [enemy1, enemy2, enemyTrain1, enemy3, enemy4, enemy5];
 
 
 // Reset player position to starting point 
