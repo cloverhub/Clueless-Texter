@@ -2,16 +2,19 @@
 var bugSpeed = 50;
 var bugSpeedFast = 150;
 var gameLevel = 1; 
-var GameEnv = function() {
-	this.sprite = 'images/Heart.png';
+
+var LevelDisplay = function() {
+    this.sprite = 'images/Heart.png';
 }
-GameEnv.prototype.render = function() {
-	// Draw other game specific details like game level
-	ctx.font="25px Verdana";
-	ctx.fillStyle = "rgba(0, 0, 0, 1)";
-	ctx.textAlign = "left";
-	ctx.fillText("Level " + gameLevel,203,575,ctx.canvas.height); 
+
+LevelDisplay.prototype.render = function() {
+    // Draw other game specific details like game level
+    ctx.font="56px Verdana";
+    ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    ctx.textAlign = "center";
+    ctx.fillText("Level " + gameLevel,355,105,ctx.canvas.height); 
 }
+
 
 // Enemies our player must avoid
 var Enemy = function(x,y) {
@@ -77,7 +80,6 @@ EnemyBlack.prototype.update = function(dt) {
 }
 
 
-
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -108,35 +110,32 @@ Player.prototype.update = function(dt) {
 }
 
 Player.prototype.handleInput = function(keynum) {
-	switch(keynum)  {
+	switch(keynum) {
 		case 'up':
 			if(this.y > 50) {
 				this.y = this.y - 83;
 			}
+			// player hits end, increase bugSpeed and gameLevel and reset player
 			else {
-				// this means player hits water, reset to initial position
-				// increase bugSpeed everytime player is able to reach the water
-				// this way game difficulty is increased as well
-				bugSpeed  = bugSpeed + (bugSpeed + gameLevel) * 1.5/ (gameLevel * gameLevel);
-				bugSpeedFast  = bugSpeedFast + (bugSpeedFast + gameLevel) * 1.5/ (gameLevel * gameLevel);
+				bugSpeed  = bugSpeed + (bugSpeed + gameLevel) * 1.5 / (gameLevel * gameLevel);
+				bugSpeedFast  = bugSpeedFast + (bugSpeedFast + gameLevel) * 1.5 / (gameLevel * gameLevel);
 				gameLevel = gameLevel + 1;
-				setTimeout(function(){player.reset()},1250);
-				// player.reset();
+				setTimeout(function(){player.reset()},1000);
 			}
 			break;
 		case 'down':
 			if(this.y < 550){
-				this.y+=83;
+				this.y = this.y + 83;
 			}
 			break;
 		case 'left':
-			if(this.x > 15){
-				this.x-=100;
+			if(this.x > 10){
+				this.x = this.x - 100;
 			}
 			break;
 		case 'right':
 			if(this.x < 600){
-				this.x+=100;
+				this.x = this.x + 100;
 			}
 			break;
 		default:
@@ -147,12 +146,12 @@ Player.prototype.handleInput = function(keynum) {
 Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.playerImg), this.x, this.y);
 }
-	
 
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+var leveldisplay = new LevelDisplay();
 var player = new Player(304,568);
 var enemy1 = new Enemy(Math.round(Math.random()*1000),60);
 var enemy2 = new Enemy(Math.round(Math.random()*100),143);
@@ -170,8 +169,6 @@ Player.prototype.reset = function() {
 	this.x = 304;
 	this.y = 568;
 }
-
-
 
 
 // This listens for key presses and sends the keys to your
