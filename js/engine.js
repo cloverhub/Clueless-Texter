@@ -108,12 +108,12 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 1 of 2 of grass
-                'images/stone-block.png',   // Row 1 of 2 of grass
-                'images/stone-block.png',   // Row 1 of 2 of grass
+                'images/street-block.png',   // Row 1 of 3 of street
+                'images/street-block.png',   // Row 2 of 3 of street
+                'images/street-block.png',   // Row 2 of 3 of street
+                'images/street-block.png',   // Row 1 of 2 of grass
+                'images/street-block.png',   // Row 1 of 2 of grass
+                'images/street-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 8,
@@ -155,7 +155,7 @@ var Engine = (function(global) {
 
 
         player.render();
-        leveldisplay.render();
+        infodisplay.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -171,14 +171,14 @@ var Engine = (function(global) {
      * all of these images are properly loaded our game will start.
      */
     Resources.load([
-        'images/stone-block.png',
+        'images/street-block.png',
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-car-bottom.png',
         'images/enemy-car-top.png',
         'images/enemy-train1.png',
         'images/enemy-train2.png',
-        'images/char-boy.png'
+        'images/char-texter.png'
     ]);
     Resources.onReady(init);
 

@@ -1,16 +1,27 @@
 // Draw game environment elements on the screenm e.g. game level no.
 var bugSpeed = 40;
 var bugSpeedFast = 120;
-var gameLevel = 1; 
+var gameLevel = 1;
+var lifeNumber = 3;
 
-var LevelDisplay = function(){}
+var InfoDisplay = function(){}
+var GameOver = function(){}
 
-LevelDisplay.prototype.render = function() {
+InfoDisplay.prototype.render = function() {
+    // Draw other game specific details like game level
+    ctx.font="56px Verdana";
+    ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    ctx.textAlign = "left";
+    ctx.fillText("Level: " + gameLevel + "       Lives: " + lifeNumber,55,105,ctx.canvas.height); 
+}
+
+
+if (lifeNumber < 1) {
     // Draw other game specific details like game level
     ctx.font="56px Verdana";
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.textAlign = "center";
-    ctx.fillText("Level " + gameLevel,355,105,ctx.canvas.height); 
+    ctx.fillText("Game Over",255,700,ctx.canvas.height); 
 }
 
 
@@ -71,7 +82,7 @@ EnemyCarBottom.prototype.update = function(dt) {
 	// Reset player to starting position when any of the bugs collides with the player
 	if ((this.x - player.x <  50 && this.y - player.y < 50) && 
 		(this.x - player.x > -50 && this.y - player.y > -50)) {
-		player.reset();
+		player.crash();
 	}
 
 	// Check if bug location has reached the right end, then reset bug's location to random starting point
@@ -90,7 +101,7 @@ EnemyCarTop.prototype.update = function(dt) {
 	// Reset player to starting position when any of the bugs collides with the player
 	if ((this.x - player.x <  50 && this.y - player.y < 50) && 
 		(this.x - player.x > -50 && this.y - player.y > -50)) {
-		player.reset();
+		player.crash();
 	}
 
 	// Check if bug location has reached the right end, then reset bug's location to random starting point
@@ -110,7 +121,7 @@ EnemyTrainOne.prototype.update = function(dt) {
 	// Reset player to starting position when any of the bugs collides with the player
 	if ((this.x - player.x <  50 && this.y - player.y < 50) && 
 		(this.x - player.x > -50 && this.y - player.y > -50)) {
-		player.reset();
+		player.crash();
 	}
 
 	// Check if bug location has reached the right end, then reset bug's location to random starting point
@@ -129,7 +140,7 @@ EnemyTrainTwo.prototype.update = function(dt) {
 	// Reset player to starting position when any of the bugs collides with the player
 	if ((this.x - player.x <  50 && this.y - player.y < 50) && 
 		(this.x - player.x > -50 && this.y - player.y > -50)) {
-		player.reset();
+		player.crash();
 	}
 
 	// Check if bug location has reached the right end, then reset bug's location to random starting point
@@ -160,7 +171,7 @@ EnemyTrainTwo.prototype.render = function() {
 // a handleInput() method.
 
 var Player = function(x,y) {
-	this.playerImage = 'images/char-boy.png';
+	this.playerImage = 'images/char-texter.png';
 	this.x = x;
 	this.y = y;
 }
@@ -218,7 +229,8 @@ Player.prototype.render = function() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var leveldisplay = new LevelDisplay();
+var infodisplay = new InfoDisplay();
+var gameover = new GameOver();
 var player = new Player(304,568);
 var enemyCarTop1 = new EnemyCarTop(Math.round(Math.random()*100),60);
 var enemyCarTop2 = new EnemyCarTop(Math.round(Math.random()*100),143);
@@ -228,6 +240,14 @@ var enemyCarBottom1 = new EnemyCarBottom(Math.round(Math.random()*100),392);
 var enemyCarBottom2 = new EnemyCarBottom(Math.round(Math.random()*100),475);
 allEnemies = [enemyCarTop1, enemyCarTop2, enemyTrain1, enemyTrain2, enemyCarBottom1, enemyCarBottom2];
 
+// If player collides subtract a life and reset player
+Player.prototype.crash = function() {
+	lifeNumber = lifeNumber - 1;
+	if (lifeNumber === 0) {
+		GameOver();
+	}
+	player.reset();
+}
 
 // Reset player position to starting point 
 Player.prototype.reset = function() {
