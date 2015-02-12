@@ -3,6 +3,7 @@ var bugSpeed = 45;
 var bugSpeedFast = 130;
 var gameLevel = 1;
 var lifeNumber = 3;
+var star = "\u2605";
 var InfoDisplay = function(){}
 
 
@@ -112,7 +113,14 @@ InfoDisplay.prototype.render = function() {
 	ctx.font="56px Verdana";
 	ctx.fillStyle = "rgba(255, 255, 255, 1)";
 	ctx.textAlign = "left";
-	ctx.fillText(gameLevel - 1 + "                 Lives: " + lifeNumber,55,105,ctx.canvas.height);
+	ctx.fillText(gameLevel - 1,30,115,ctx.canvas.height);
+	if (lifeNumber === 3) {
+		ctx.fillText(star + star,530,115,ctx.canvas.height);
+	}
+	if (lifeNumber === 2) {
+		ctx.fillText(star,530,115,ctx.canvas.height);
+	}
+// 	ctx.fillText(gameLevel - 1 + "                  Lives: " + lifeNumber,40,115,ctx.canvas.height);
 	if (lifeNumber === 0) {
 	GameOver();
 	}
@@ -239,6 +247,8 @@ var NewGame = function() {
 }; 
 	lifeNumber = 3;
 	gameLevel = 1;
+	bugSpeed = 45;
+	bugSpeedFast = 130;
 	player.reset();
 }
 
