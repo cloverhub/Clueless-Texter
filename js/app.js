@@ -4,6 +4,8 @@ var bugSpeedFast = 130;
 var gameLevel = 1;
 var lifeNumber = 3;
 var star = "\u2605";
+var squish = new Audio("sounds/squish.wav");
+var yipee = new Audio("sounds/yipee.wav");
 var InfoDisplay = function(){}
 
 
@@ -112,15 +114,14 @@ InfoDisplay.prototype.render = function() {
 	// Draw other game specific details like game level
 	ctx.font="56px Verdana";
 	ctx.fillStyle = "rgba(255, 255, 255, 1)";
-	ctx.textAlign = "left";
-	ctx.fillText(gameLevel - 1,30,115,ctx.canvas.height);
+	ctx.textAlign = "right";
+	ctx.fillText(gameLevel - 1,80,115,ctx.canvas.height);
 	if (lifeNumber === 3) {
-		ctx.fillText(star + star,530,115,ctx.canvas.height);
+		ctx.fillText(star + star,630,115,ctx.canvas.height);
 	}
 	if (lifeNumber === 2) {
-		ctx.fillText(star,530,115,ctx.canvas.height);
+		ctx.fillText(star,630,115,ctx.canvas.height);
 	}
-// 	ctx.fillText(gameLevel - 1 + "                  Lives: " + lifeNumber,40,115,ctx.canvas.height);
 	if (lifeNumber === 0) {
 	GameOver();
 	}
@@ -184,11 +185,13 @@ allEnemies = [enemyCarTop1, enemyCarTop2, enemyTrain1, enemyTrain2, enemyCarBott
 
 // If player collides subtract a life and reset player
 var PlayerCrash = function() {
+	squish.play();
 	lifeNumber = lifeNumber - 1;
 	player.reset();
 }
 
 var PlayerSuccess = function() {
+	yipee.play();
 	gameLevel = gameLevel + 1;
 	bugSpeed  = bugSpeed + (bugSpeed + gameLevel) * 3.5 / (gameLevel * gameLevel);
 	bugSpeedFast  = bugSpeedFast + (bugSpeedFast + gameLevel) * 3.5 / (gameLevel * gameLevel);
