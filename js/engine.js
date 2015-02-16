@@ -25,7 +25,7 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
     canvas.width = 707;
-    canvas.height = 718;
+    canvas.height = 638;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -107,16 +107,15 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/street-block.png',   // Row 1 of 3 of street
-                'images/street-block.png',   // Row 2 of 3 of street
-                'images/street-block.png',   // Row 2 of 3 of street
-                'images/street-block.png',   // Row 1 of 2 of grass
-                'images/street-block.png',   // Row 1 of 2 of grass
-                'images/street-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/sidewalk-top-block.png',   // Top row is water
+                'images/street-block-white-solid.png',   // Row 2 of 3 of street
+                'images/street-block-white.png',   // Row 2 of 3 of street
+                'images/street-block-yellow.png',   // Row 1 of 2 of grass
+                'images/street-block-white.png',   // Row 1 of 2 of grass
+                'images/street-block-white-solid.png',   // Row 1 of 2 of grass
+                'images/sidewalk-bottom-block.png'    // Row 2 of 2 of grass
             ],
-            numRows = 8,
+            numRows = 7,
             numCols = 7,
             row, col;
 
@@ -171,11 +170,15 @@ var Engine = (function(global) {
      * all of these images are properly loaded our game will start.
      */
     Resources.load([
-        'images/street-block.png',
-        'images/water-block.png',
-        'images/grass-block.png',
+        'images/street-block-yellow.png',
+        'images/street-block-white.png',
+        'images/street-block-white-solid.png',
+        'images/sidewalk-top-block.png',
+        'images/sidewalk-bottom-block.png',
         'images/enemy-car-bottom.png',
         'images/enemy-car-top.png',
+        'images/enemy-bicycle-top.png',
+        'images/enemy-bicycle-bottom.png',
         'images/enemy-train1.png',
         'images/enemy-train2.png',
         'images/char-texter.png'

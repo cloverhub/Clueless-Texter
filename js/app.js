@@ -1,13 +1,20 @@
 // Draw game environment elements on the screenm e.g. game level no.
-var bugSpeed = 45;
+var bugSpeed = 60;
 var bugSpeedFast = 130;
 var gameLevel = 1;
 var lifeNumber = 3;
-var star = "\u2605";
-var squish = new Audio("sounds/squish.wav");
-var yipee = new Audio("sounds/yipee.wav");
-var InfoDisplay = function(){}
+var symbols = {
+	star : "\u2605",
+	smiley : "\u263A"
+}
 
+var sounds = {
+	"squish" : new Audio("sounds/squish.wav"),
+	"yipee" : new Audio("sounds/yipee.wav"),
+	"yay" : new Audio("sounds/yay.wav")
+}
+
+var InfoDisplay = function(){}
 
 var EnemyCarBottom = function(x,y) {
 	this.sprite = 'images/enemy-car-bottom.png';
@@ -17,6 +24,18 @@ var EnemyCarBottom = function(x,y) {
 
 var EnemyCarTop = function(x,y) {
 	this.sprite = 'images/enemy-car-top.png';
+	this.x = x;
+	this.y = y;
+}
+
+var EnemyBicycleBottom = function(x,y) {
+	this.sprite = 'images/enemy-bicycle-bottom.png';
+	this.x = x;
+	this.y = y;
+}
+
+var EnemyBicycleTop = function(x,y) {
+	this.sprite = 'images/enemy-bicycle-top.png';
 	this.x = x;
 	this.y = y;
 }
@@ -67,6 +86,32 @@ EnemyCarTop.prototype.update = function(dt) {
 	}
 }
 
+EnemyBicycleBottom.prototype.update = function(dt) {
+	this.x += ((Math.random()* 100) + (bugSpeed / 1.8)) * dt;
+	// Check for collision between bottom cars and player 
+	if ((this.x - player.x <  50 && this.y - player.y < 50) && 
+		(this.x - player.x > -50 && this.y - player.y > -50)) {
+		PlayerCrash();
+	}
+	// Check if car has reached the right end, then reset car's location to random starting point
+	if (this.x > 600) {
+	   this.x = -((Math.random()*500));
+	}
+}
+
+EnemyBicycleTop.prototype.update = function(dt) {
+	this.x -= ((Math.random()* 100) + (bugSpeed / 1.8)) * dt;
+	// Check for collision between top cars and player 
+	if ((this.x - player.x <  50 && this.y - player.y < 50) && 
+		(this.x - player.x > -50 && this.y - player.y > -50)) {
+		PlayerCrash();
+	}
+	// Check if car has reached the right end, then reset car's location to random starting point
+	if (this.x < 1) {
+	   this.x = +((Math.random()*600)+800);
+	}
+}
+
 EnemyTrainOne.prototype.update = function(dt) {
 	this.x -= ((Math.random()* 100) + bugSpeedFast) * dt;
 	// Check for collision between top train and player 
@@ -102,6 +147,14 @@ EnemyCarTop.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+EnemyBicycleBottom.prototype.render = function() {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+EnemyBicycleTop.prototype.render = function() {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
 EnemyTrainOne.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
@@ -117,10 +170,10 @@ InfoDisplay.prototype.render = function() {
 	ctx.textAlign = "right";
 	ctx.fillText(gameLevel - 1,80,115,ctx.canvas.height);
 	if (lifeNumber === 3) {
-		ctx.fillText(star + star,630,115,ctx.canvas.height);
+		ctx.fillText(symbols.star + symbols.star,690,115,ctx.canvas.height);
 	}
 	if (lifeNumber === 2) {
-		ctx.fillText(star,630,115,ctx.canvas.height);
+		ctx.fillText(symbols.star,690,115,ctx.canvas.height);
 	}
 	if (lifeNumber === 0) {
 	GameOver();
@@ -145,7 +198,7 @@ Player.prototype.handleInput = function(keynum) {
 			}
 			break;
 		case 'down':
-			if(this.y < 550){
+			if(this.y < 498){
 				this.y = this.y + 83;
 			}
 			break;
@@ -174,24 +227,27 @@ Player.prototype.render = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var infodisplay = new InfoDisplay();
-var player = new Player(304,568);
-var enemyCarTop1 = new EnemyCarTop((Math.random()*2000),60);
-var enemyCarTop2 = new EnemyCarTop((Math.random()*2000),143);
-var enemyTrain1 = new EnemyTrainOne((Math.random()*2000),226);
-var enemyTrain2 = new EnemyTrainTwo((Math.random()*2000),309);
-var enemyCarBottom1 = new EnemyCarBottom((Math.random()*2000),392);
-var enemyCarBottom2 = new EnemyCarBottom((Math.random()*2000),475);
-allEnemies = [enemyCarTop1, enemyCarTop2, enemyTrain1, enemyTrain2, enemyCarBottom1, enemyCarBottom2];
+var player = new Player(304,498);
+var enemyBicycleTop = new EnemyBicycleTop((Math.random()*2000),0);
+var enemyCarTop2 = new EnemyCarTop((Math.random()*2000),83);
+var enemyTrain1 = new EnemyTrainOne((Math.random()*2000),166);
+var enemyTrain2 = new EnemyTrainTwo((Math.random()*2000),249);
+var enemyCarBottom1 = new EnemyCarBottom((Math.random()*2000),332);
+var enemyBicycleBottom = new EnemyBicycleBottom((Math.random()*2000),415);
+allEnemies = [enemyBicycleTop, enemyCarTop2, enemyTrain1, enemyTrain2, enemyCarBottom1, enemyBicycleBottom];
 
 // If player collides subtract a life and reset player
 var PlayerCrash = function() {
-	squish.play();
+	sounds.squish.play();
 	lifeNumber = lifeNumber - 1;
+	if (lifeNumber === 0 && gameLevel > 10) {
+		sounds.yay.play();
+	}
 	player.reset();
 }
 
 var PlayerSuccess = function() {
-	yipee.play();
+	sounds.yipee.play();
 	gameLevel = gameLevel + 1;
 	bugSpeed  = bugSpeed + (bugSpeed + gameLevel) * 3.5 / (gameLevel * gameLevel);
 	bugSpeedFast  = bugSpeedFast + (bugSpeedFast + gameLevel) * 3.5 / (gameLevel * gameLevel);
@@ -202,15 +258,13 @@ var GameOver = function() {
 	ctx.font="56px Verdana";
 	ctx.fillStyle = "rgba(255, 255, 255, 1)";
 	ctx.textAlign = "center";
-	ctx.fillText("GAME OVER",370,380,ctx.canvas.height);
+	ctx.fillText("GAME OVER, LOL" + symbols.smiley,370,298,ctx.canvas.height);
 	ctx.font="24px Verdana";
-	ctx.fillText("press Esc for new game",370,420,ctx.canvas.height);
+	ctx.fillText("press Esc for new game",370,372,ctx.canvas.height);
 	Player.prototype.handleInput = function(keynum) {
 		switch(keynum) {
 			case 'escape':
 				NewGame();
-			default:
-				return;
 		}
 	}
 }
@@ -228,7 +282,7 @@ var NewGame = function() {
 			}
 			break;
 		case 'down':
-			if(this.y < 550){
+			if(this.y < 498){
 				this.y = this.y + 83;
 			}
 			break;
@@ -250,7 +304,7 @@ var NewGame = function() {
 }; 
 	lifeNumber = 3;
 	gameLevel = 1;
-	bugSpeed = 45;
+	bugSpeed = 60;
 	bugSpeedFast = 130;
 	player.reset();
 }
@@ -258,7 +312,7 @@ var NewGame = function() {
 // Increase enemy speed and reset player position to start
 Player.prototype.reset = function() {
 	this.x = 304;
-	this.y = 568;
+	this.y = 498;
 }
 
 // Listen for key presses and sends the keys to Player.handleInput() method
