@@ -1,0 +1,33 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/Users/clove/Google Drive/Training/Udacity FE Nanodegree/Projects/Project 3/cherylcourt"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/Users/clove/Google Drive/Training/Udacity FE Nanodegree/Projects/Project 3/colinrcummings"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/Users/clove/Google Drive/Training/Udacity FE Nanodegree/Projects/Project 3/maccoolis"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/Users/clove/Google Drive/Training/Udacity FE Nanodegree/Projects/Project 3/uncleoptimus"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/Users/clove/Google Drive/Training/Udacity FE Nanodegree/Projects/Project 3/fedn-project3-master"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/Users/clove/Google Drive/Training/Udacity FE Nanodegree/Projects/Project 3/originals"
+		}
+	]
+}
