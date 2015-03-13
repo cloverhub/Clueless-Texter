@@ -23,6 +23,5 @@ body {
 img.info {
 	position:absolute;
 	right:50px;
-	bottom:50px;
-	z-index:1;
+	top:530px;
 }
