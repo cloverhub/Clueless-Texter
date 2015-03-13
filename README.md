@@ -1,6 +1,6 @@
 ## Udacity FE Web Developer Nanodegree Project 3: Classic Arcade Game
 
-### Clueless Texter
+### Clueless Texter (A Frogger Variant)
 
 [Play Clueless Texter](http://shawnclover.com/games/cluelesstexter)
 
@@ -32,4 +32,4 @@ Our poor character can't stop texting, even when crossing the street. Help our o
 * Texter character: Udacity's original char-boy.png asset modified by Shawn Clover
 * Other graphics: drawn by Shawn Clover
 * Background photo: Shawn Clover
-* Help icon: Wikimedia Commons via Farm-Fresh Web Icons (Creative Commons)
+* Help icon: Wikimedia Commons public domain image via Adobe
