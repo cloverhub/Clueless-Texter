@@ -30,9 +30,9 @@ Our poor character can't stop texting, even when crossing the street. Help our o
 #### Files Included
 * index.html: default page to load CSS file and three JavaScript files and display the help icon
 * css/style.css: sets a responsive-sized background image and aligns the help icon
-* engine.js: provides the game loop functionality (update entities and render), draws the initial game board on the screen, and  calls the update and render methods on the player and enemy objects from app.js
-* app.js: renders the enemy images and player image, sets game speed, provides new game and game over functions, listens for keyboard keys, plays sounds, draws score and lives remaining, and handles player collisions and successes
-* resources.js: an image loading utility to ease the process of loading image files so that they can be used within your game. It also includes a simple "caching" layer so it will reuse cached images when loading the same image multiple times
+* js/engine.js: provides the game loop functionality (update entities and render), draws the initial game board on the screen, and  calls the update and render methods on the player and enemy objects from app.js
+* js/app.js: renders the enemy images and player image, sets game speed, provides new game and game over functions, listens for keyboard keys, plays sounds, draws score and lives remaining, and handles player collisions and successes
+* js/resources.js: an image loading utility to ease the process of loading image files so that they can be used within your game. It also includes a simple "caching" layer so it will reuse cached images when loading the same image multiple times
 * images/ : enemy images, player image, play area tiles, and help icon
 * sounds/ : three wav files for sound fx
 * README.md: you are here
