@@ -27,6 +27,16 @@ Our poor character can't stop texting, even when crossing the street. Help our o
 * Created a game over function to prevent further play when number of lives = 0 and to display game over message and cheering sound if a score of 10 is reached
 * Added sound effects (all Creative Commons from freesound.org)
 
+#### Files Included
+* index.html: default page to load CSS file and three JavaScript files and display the help icon
+* css/style.css: sets a responsive-sized background image and aligns the help icon
+* engine.js: provides the game loop functionality (update entities and render), draws the initial game board on the screen, and  calls the update and render methods on the player and enemy objects from app.js
+* app.js: renders the enemy images and player image, sets game speed, provides new game and game over functions, listens for keyboard keys, plays sounds, draws score and lives remaining, and handles player collisions and successes
+* resources.js: an image loading utility to ease the process of loading image files so that they can be used within your game. It also includes a simple "caching" layer so it will reuse cached images when loading the same image multiple times
+* images/ : enemy images, player image, play area tiles, and help icon
+* sounds/ : three wav files for sound fx
+* README.md: you are here
+
 #### Attributions
 * Sound effects: freesound.org (Creative Commons)
 * Texter character: Udacity's original char-boy.png asset modified by Shawn Clover
