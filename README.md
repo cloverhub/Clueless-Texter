@@ -2,7 +2,7 @@
 
 ### Clueless Texter (A Frogger Variant)
 
-[Play Clueless Texter](http://shawnclover.com/games/cluelesstexter)
+[Play Clueless Texter](http://shawnclover.com/apps/cluelesstexter)
 
 Our poor character can't stop texting, even when crossing the street. Help our oblivious texter cross San Francisco's busy Market Street amid six lanes of bicycles, cars, and speeding streetcars.
 
